@@ -1,7 +1,7 @@
 namespace domain;
 
 
-public enum Status
+public enum ListingStatus
 {
     Available,
     NotAvailable,

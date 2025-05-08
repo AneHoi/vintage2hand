@@ -1,6 +1,5 @@
-﻿namespace service;
+﻿namespace infrastructure;
 
 public class Class1
 {
-
 }

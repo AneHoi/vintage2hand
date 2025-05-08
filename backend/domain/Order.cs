@@ -2,9 +2,9 @@ namespace domain;
 
 public class Order
 {
-    public int PurchaseId { get; set; }
+    public Guid Id { get; set; }
     public Guid ListingId { get; set; }
-    public Guid BuyierId { get; set; }
+    public Guid BuyerId { get; set; }
     public double Price { get; set; }
-    public PaymentStatus PaymentStatus { get; set; }
+    public OrderStatus OrderStatus { get; set; }
 }

@@ -14,8 +14,8 @@ public class Listings
     [Range(0, 900000, ErrorMessage = "The price cannot be negative.")]
     public double Price { get; set; }
     
-    public Status Status { get; set; } 
-    public List<ListingImage> Image { get; set; } = [];
+    public ListingStatus ListingStatus { get; set; } 
+    public List<ListingImage> Images { get; set; } = [];
 }
 
 

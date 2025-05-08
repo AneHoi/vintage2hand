@@ -1,6 +1,6 @@
 namespace domain;
 
-public enum PaymentStatus
+public enum OrderStatus
 {
     Pending,
     Paid
