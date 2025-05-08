@@ -5,6 +5,9 @@
 # .NET Core build folders
 bin/
 obj/
+.idea/
+
+backend/vault_data/
 
 # Common node modules locations
 /node_modules
