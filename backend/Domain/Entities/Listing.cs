@@ -2,10 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace domain;
 
-public class Listings
+public class Listing
 {
     public Guid Id { get; set; }
-    public Guid userId { get; set; }
+    public Guid SellerId { get; set; }
     
     public string Title { get; set; }
     public string Description { get; set; }
