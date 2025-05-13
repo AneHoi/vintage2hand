@@ -89,5 +89,9 @@ To be more technical, when placing an order, the operations such as inserting an
 Inserts, updates, and deletes are grouped into a single atomic transaction. This is executed on IUnitOfWork’s SaveChangesAsync() (which wraps database context’s SaveChangesAsync()). It attempts to commit all of the tracked changes. If any operation fails or an exception occurs, the transaction is rolled back (thus ensuring atomicity for the database part).
 
 Looking at the scenario of listing creation with image uploads, we can see that an external service is involved. Our approach to handling it is the following:
-First, attempt to upload the images for the listing. If an image upload fails, the handler will stop processing deleting any previous images already uploaded for that request (a compensating action), No db transaction is initiated. The user is notified of failure and can retry.
-If the necessary cloud operations (image uploads) are successful, the command handler creates the listing in db. This is where all db changes are atomically committed using units of work.
+1. First, attempt to upload the images for the listing. If an image upload fails, the handler will stop processing deleting any previous images already uploaded for that request (a compensating action), No db transaction is initiated. The user is notified of failure and can retry.
+2. If the necessary cloud operations (image uploads) are successful, the command handler creates the listing in db. This is where all db changes are atomically committed using units of work. If any of the actions fail, the transaction is rolled back. The compensating action defined in #1 is executed (for the image uploading)
+
+Note that the database only stores a reference to the listing images.
+
+
