@@ -1,7 +1,17 @@
+using application.Interfaces;
+using infrastructure.Services;
+using StackExchange.Redis;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+
+builder.Services.AddSingleton<IConnectionMultiplexer>(
+    ConnectionMultiplexer.Connect("localhost:6379")); 
+
+builder.Services.AddSingleton<ICacheService, RedisCacheService>();
+
 
 builder.Services.AddMediatR(cfg =>
 {
