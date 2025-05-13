@@ -76,8 +76,8 @@ Improve read performance for frequently accessed, relatively static data, reduci
 - User Profiles (GET /users/{id}).
 
 ### Cache Invalidation Strategy:
-- **Time-To-Live (TTL):** Primarily using TTL for simplicity given the project constraints. Cached items will expire after a defined period (e.g., 5 minutes). This provides a balance between performance and data freshness.
-- **Potential Write-Through (Conceptual):** For a more robust system, cache entries (e.g., for a specific listing) would be explicitly invalidated/updated when the underlying data changes (e.g., when a listing is updated or sold). We acknowledge this but will rely on TTL for this implementation scope.
+- Time-To-Live (TTL): Primarily using TTL for simplicity given the project constraints. Cached items will expire after a defined period (e.g., 5 minutes). This provides a balance between performance and data freshness.
+- Potential Write-Through (Conceptual): For a more robust system, cache entries (e.g., for a specific listing) would be explicitly invalidated/updated when the underlying data changes (e.g., when a listing is updated or sold). We acknowledge this but will rely on TTL for this implementation scope.
 
 ### Implementation:
 A CacheService abstraction will be used. Services like ListingService will first attempt to fetch data from the cache; on a cache miss, they will fetch from the database, store the result in the cache with a TTL, and then return the data.
@@ -89,5 +89,5 @@ To be more technical, when placing an order, the operations such as inserting an
 Inserts, updates, and deletes are grouped into a single atomic transaction. This is executed on IUnitOfWork’s SaveChangesAsync() (which wraps database context’s SaveChangesAsync()). It attempts to commit all of the tracked changes. If any operation fails or an exception occurs, the transaction is rolled back (thus ensuring atomicity for the database part).
 
 Looking at the scenario of listing creation with image uploads, we can see that an external service is involved. Our approach to handling it is the following:
-First, attempt to upload the images for the listing. If an image upload fails, the handler will stop processingm deleting any previous images already uploaded for that request (a compensating action), No db transaction is initiated. The user is notified of failure and can retry.
+First, attempt to upload the images for the listing. If an image upload fails, the handler will stop processing deleting any previous images already uploaded for that request (a compensating action), No db transaction is initiated. The user is notified of failure and can retry.
 If the necessary cloud operations (image uploads) are successful, the command handler creates the listing in db. This is where all db changes are atomically committed using units of work.
