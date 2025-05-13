@@ -21,9 +21,9 @@ public class PlaceOrderCommandHandler : IRequestHandler<PlaceOrderCommand, Guid>
     public async Task<Guid> Handle(PlaceOrderCommand request, CancellationToken cancellationToken)
     {
         // Fetch listings, check availability, and create order & update listing status
-        // Persist to db.
-        // Commit transaction using unit of work (critical for order and listing updates)
-        // Publish event: OrderPlacedEvent
+        // Commit transaction using unit of work (critical for order and listing updates). 
+        // If any step fails, rollback transaction (done by unit of work)
+        // Publish event: OrderPlacedEvent using Mediatr
         
         // return order ID
         throw new NotImplementedException();

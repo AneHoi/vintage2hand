@@ -37,10 +37,14 @@ public class CreateListingCommandHandler : IRequestHandler<CreateListingCommand,
             ListingStatus = ListingStatus.Available
         };
         
-        // 2. For each image - Upload to cloud & assign returned URL to listing
-        // 3. Add to repository
-        // 4. Save changes transactionally (unit of work)
-        // 5. Publish domain event (for read model sync and other side effects / subscribers)
+        // 2. For each imageL
+                // upload to cloud:
+        // If one upload fails:
+            // Execute compensating action (delete the previously uploaded files)
+        // Create a listing in db using repo, associating the image URLs
+        // 4. Save changes transactionally (unit of work).
+        //      If performing multiple actions and one fails, transaction will be rolled back and compensating action for images will be executed.
+        // 5. Publish domain event (for read model sync and other side effects / subscribers) using Mediatr
         throw new NotImplementedException();
     }
 
