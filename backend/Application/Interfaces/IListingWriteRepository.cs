@@ -2,13 +2,9 @@ namespace domain.Interfaces;
 
 public interface IListingWriteRepository
 {
-    /*  Update data in repository
-     *  Unit of work research – in repositories.
-     * Transaction starts
-     * Write to SQL database
-     * Write to NoSQL Repository
-     * Transaction finish
+    /*  This would be implemented in infrastructure layer.
+     * It Writes to the NO-SQL database
      */
-    Listing AddItemToStorrage(Listing listing);
+    Listing SaveListing(Listing listing);
     
 }

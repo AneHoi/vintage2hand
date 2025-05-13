@@ -1,6 +1,8 @@
+using MediatR;
+
 namespace domain;
 
-public record ListingCreatedEvent()
+public class ListingCreatedEvent : INotification
 {
     public Guid Id { get; set; }
     public Guid SellerId { get; set; }

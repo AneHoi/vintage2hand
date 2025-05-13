@@ -1,6 +1,8 @@
+using MediatR;
+
 namespace domain;
 
-public class SellerReviewSubmittedEvent
+public class SellerReviewSubmittedEvent : INotification
 {
     
 }
